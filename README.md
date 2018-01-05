@@ -1,6 +1,6 @@
-#Editor
+# Editor
 
-##Quick Overview
+## Quick Overview
 
 ```sh
 git clone https://github.com/zanusilker/react-editor.git 

@@ -8,6 +8,10 @@ import Result from "./../components/result/Result";
 import './App.css';
 
 class App extends Component {
+  state = {
+    html: ''
+  }
+
   handleBold = () => {
     console.log('bold')
   }
@@ -39,9 +43,9 @@ class App extends Component {
           handleUnderline={this.handleUnderline}
           changeHeading={this.changeHeading}
         />
-        <Editor />
+        <Editor /> 
         <Download />
-        <Result />
+        <Result>{this.state.html}</Result>
       </div>
     );
   }

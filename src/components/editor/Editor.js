@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './Editor.css';
 
 class Editor extends Component {
+  state = {
+    html: 'Hello'
+  }
 
   setCommand = (aCommandName, aValueArgument, aShowDefaultUI) => {
     aShowDefaultUI = aShowDefaultUI || false;
@@ -9,13 +12,13 @@ class Editor extends Component {
     document.execCommand(aCommandName, aShowDefaultUI, aValueArgument);
   }
 
-  handleInput = () => {
-    console.log('Input')
+  handleInput = (e) => {
+    console.log('Input', e.target.innerHTML)
   }
 
   render() {
     return (
-      <div onInput={this.handleInput} contentEditable="true" id="editor" className="editor"></div>
+      <div onInput={this.handleInput} contentEditable="true" id="editor" className="editor">{this.state.html}</div>
     );
   }
 }
