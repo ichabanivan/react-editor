@@ -5,50 +5,88 @@ import Download from "./../components/download/Download";
 import Editor from "./../components/editor/Editor";
 import Result from "./../components/result/Result";
 
+import eventEmmiter from './eventEmmiter'
+
 import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.init();
+    this.setCommand = this.setCommand.bind(this)
+  }
+
   state = {
     html: ''
-  }
+  };
 
-  handleBold = () => {
-    console.log('bold')
-  }
+  setCommand = (aCommandName, aValueArgument, aShowDefaultUI) => {
+    aShowDefaultUI = aShowDefaultUI || false;
+    aValueArgument = aValueArgument || null;
+    document.execCommand(aCommandName, aShowDefaultUI, aValueArgument);
+  };
 
-  handleItalic = () => {
-    console.log('italic')
-  }
+  init = () => {
+    eventEmmiter.on('bold', () => {
+      this.setCommand('bold')
+    });
 
-  handleUnderline = () => {
-    console.log('underline')
-  }
+    eventEmmiter.on('italic', () => {
+      this.setCommand('italic')
+    });
 
-  changeHeading = (e) => {
-    var heading = e.target.value; // h1-h6
+    eventEmmiter.on('underline', () => {
+      this.setCommand('underline')
 
-    // Reset
-    e.target.value = 0;
+    });
 
-    console.log('heading')
-    console.log(heading)
-  }
+    eventEmmiter.on('p', () => {
+      this.setCommand('formatBlock', '<p>')
+
+    });
+
+    eventEmmiter.on('h1', () => {
+      this.setCommand('formatBlock', '<h1>')
+
+    });
+
+    eventEmmiter.on('h2', () => {
+      this.setCommand('formatBlock', '<h2>')
+
+    });
+
+    eventEmmiter.on('h3', () => {
+      this.setCommand('formatBlock', '<h3>')
+    });
+
+    eventEmmiter.on('h4', () => {
+      this.setCommand('formatBlock', '<h4>')
+    });
+
+    eventEmmiter.on('h5', () => {
+      this.setCommand('formatBlock', '<h5>')
+    });
+
+    eventEmmiter.on('h6', () => {
+      this.setCommand('formatBlock', '<h6>')
+    });
+
+    // Download and preview
+    eventEmmiter.on('changeText', (e) => {
+      this.setState({html: e})
+    });
+  };
 
   render() {
     return (
       <div className="App">
-        <Options 
-          handleBold={this.handleBold}
-          handleItalic={this.handleItalic}
-          handleUnderline={this.handleUnderline}
-          changeHeading={this.changeHeading}
-        />
-        <Editor /> 
-        <Download />
+        <Options />
+        <Editor />
+        <Download html={this.state.html}/>
         <Result>{this.state.html}</Result>
       </div>
     );
   }
 }
-
 export default App;

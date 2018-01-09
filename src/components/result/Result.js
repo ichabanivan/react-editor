@@ -4,7 +4,9 @@ import './Result.css';
 class Result extends Component {
   render() {
     return (
-      <div id="result"></div>
+      <div id="result">
+        {this.props.children}
+      </div>
     );
   }
 }
